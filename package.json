@@ -1,0 +1,13 @@
+{
+  "name": "aos-sdk-js",
+  "private": true,
+  "workspaces": ["packages/js", "packages/react", "packages/node"],
+  "scripts": {
+    "build": "npm run build -w @aos-auth/js && npm run build -w @aos-auth/react && npm run build -w @aos-auth/node",
+    "test": "npm run build && node --test packages/*/test/*.test.mjs",
+    "test:integration": "npm run build && node --test test-integration/*.test.mjs"
+  },
+  "devDependencies": {
+    "typescript": "5.9.3"
+  }
+}

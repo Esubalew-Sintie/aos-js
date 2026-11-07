@@ -1,0 +1,35 @@
+{
+  "name": "@aos-auth/js",
+  "version": "0.3.0",
+  "description": "AOS identity engine client for browsers and React Native: sign-up, sign-in, second factors, passkeys, organizations, and tokens for your backend.",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/flash-softeware/aos-js.git",
+    "directory": "packages/js"
+  },
+  "homepage": "https://github.com/flash-softeware/aos-js#readme",
+  "bugs": {
+    "url": "https://github.com/flash-softeware/aos-js/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

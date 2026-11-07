@@ -1,0 +1,41 @@
+{
+  "name": "@aos-auth/node",
+  "version": "0.3.0",
+  "description": "AOS identity engine SDK for Node backends: verify session tokens, check permissions, manage users and keys, Express and Next.js helpers.",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "devDependencies": {
+    "@types/node": "22.18.12"
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/flash-softeware/aos-js.git",
+    "directory": "packages/node"
+  },
+  "homepage": "https://github.com/flash-softeware/aos-js#readme",
+  "bugs": {
+    "url": "https://github.com/flash-softeware/aos-js/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

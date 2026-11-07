@@ -1,0 +1,49 @@
+{
+  "name": "@aos-auth/react",
+  "version": "0.3.0",
+  "description": "React components and hooks for the AOS identity engine: SignIn, SignUp, UserButton, OrganizationSwitcher, Protect and the /auth pages.",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./styles.css": "./styles.css"
+  },
+  "files": [
+    "dist",
+    "styles.css",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@aos-auth/js": "0.3.0"
+  },
+  "peerDependencies": {
+    "react": ">=18"
+  },
+  "devDependencies": {
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "@types/react": "19.2.2",
+    "@types/react-dom": "19.2.2"
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/flash-softeware/aos-js.git",
+    "directory": "packages/react"
+  },
+  "homepage": "https://github.com/flash-softeware/aos-js#readme",
+  "bugs": {
+    "url": "https://github.com/flash-softeware/aos-js/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
