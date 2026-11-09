@@ -13,7 +13,7 @@ import { gunzipSync, inflateRawSync } from "node:zlib";
 import { Aos } from "./client.js";
 
 /** The engine release this SDK is tested with. */
-export const ENGINE_VERSION = "v0.4.0";
+export const ENGINE_VERSION = "v0.4.1";
 
 export interface LocalOptions {
   /** The application's Postgres. The engine keeps its own schemas there. */
