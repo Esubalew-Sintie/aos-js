@@ -5,7 +5,7 @@ import type {
   Permission, Resource, Role, User, Webhook,
 } from "./types.js";
 
-export const VERSION = "0.3.0";
+export const VERSION = "0.4.0";
 
 /**
  * The AOS client for your backend.

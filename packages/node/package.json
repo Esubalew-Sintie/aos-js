@@ -1,6 +1,6 @@
 {
   "name": "@aos-auth/node",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "AOS identity engine SDK for Node backends: verify session tokens, check permissions, manage users and keys, Express and Next.js helpers.",
   "type": "module",
   "main": "dist/index.js",

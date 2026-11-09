@@ -35,4 +35,23 @@ const claims = await getAuth(aos, request);          // null when not signed in
 - `aos.can({...})`, `canBatch`, `filter`, `explain`; `aos.permissions`, `aos.roles`, `aos.resources`, `aos.grants`, `aos.users`, `aos.organizations`, `aos.apiKeys`, `aos.webhooks`.
 - `verifyWebhook(secret, signatureHeader, rawBody)` checks a delivery; read the raw body before any JSON parser.
 
+## Your own database, no auth server to deploy
+
+`startLocal` runs the engine beside your app: the SDK downloads the engine release it is tested with (or uses `AOS_ENGINE`), starts it with your Postgres, and stops it with your process. Your server passes the browser's `/aos` routes to it; your backend code is unchanged.
+
+```js
+import { startLocal } from "@aos-auth/node";
+
+const local = await startLocal({
+  databaseUrl: process.env.DATABASE_URL,
+  masterKey: process.env.AOS_MASTER_KEY,       // aos keygen makes one; keep it out of git
+  appUrl: "https://shop.example.com",
+});
+app.use(local.handler());                       // /aos/* goes to the engine
+const aos = local.aos;                          // the same client as with the hosted service
+// In the browser: url = "https://shop.example.com/aos", publishableKey = local.publishableKey
+```
+
+Next.js: `export const GET = (r) => local.fetch(r)` (and `POST`, ...) in `app/aos/[...path]/route.ts`.
+
 Source and issues: https://github.com/flash-softeware/aos-js

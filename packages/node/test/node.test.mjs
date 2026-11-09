@@ -165,3 +165,50 @@ test("express canMiddleware", async () => {
   await mw({ headers: { authorization: "Bearer " + token({ ...base, org: "acme" }) }, body: { permissions: ["invoice.read", "invoice.refund"] } }, res);
   assert.deepEqual(res.body, { results: { "invoice.read": true, "invoice.refund": false } });
 });
+
+test("downloadEngine checks the checksum and caches the program", async () => {
+  const { downloadEngine } = await import("../dist/index.js");
+  const { createServer } = await import("node:http");
+  const { createHash } = await import("node:crypto");
+  const { gzipSync } = await import("node:zlib");
+  const { mkdtempSync, readFileSync } = await import("node:fs");
+  const { tmpdir } = await import("node:os");
+  const { join } = await import("node:path");
+  if (process.platform === "win32") return;
+  // A tar.gz holding ./aos, built by hand.
+  const body = Buffer.from("#!/bin/sh\necho engine\n");
+  const header = Buffer.alloc(512);
+  header.write("./aos", 0); header.write("0000755\0", 100); header.write("0000000\0", 108); header.write("0000000\0", 116);
+  header.write(body.length.toString(8).padStart(11, "0") + "\0", 124); header.write("00000000000\0", 136);
+  header.write("        ", 148); header.write("0", 156); header.write("ustar\0", 257); header.write("00", 263);
+  let sum = 0; for (const b of header) sum += b; header.write(sum.toString(8).padStart(6, "0") + "\0 ", 148);
+  const tar = Buffer.concat([header, body, Buffer.alloc(512 - body.length), Buffer.alloc(1024)]);
+  const archive = gzipSync(tar);
+  const os = { linux: "linux", darwin: "darwin" }[process.platform], arch = { x64: "amd64", arm64: "arm64" }[process.arch];
+  const asset = `aos_v9.9.9_${os}_${arch}.tar.gz`;
+  let good = true, hits = 0;
+  const server = createServer((req, res) => {
+    hits++;
+    if (req.url === "/v9.9.9/checksums.txt") return res.end(`${createHash("sha256").update(archive).digest("hex")}  ${asset}\n`);
+    if (req.url === "/v9.9.9/" + asset) return res.end(good ? archive : Buffer.concat([archive, Buffer.from([0])]));
+    res.statusCode = 404; res.end();
+  });
+  await new Promise((r) => server.listen(0, "127.0.0.1", r));
+  process.env.AOSCTL_RELEASES_URL = `http://127.0.0.1:${server.address().port}`;
+  try {
+    process.env.AOSCTL_CACHE_DIR = mkdtempSync(join(tmpdir(), "aos-cache-"));
+    good = false;
+    await assert.rejects(downloadEngine("v9.9.9"), /checksum/);
+    good = true;
+    const path = await downloadEngine("v9.9.9");
+    assert.deepEqual(readFileSync(path), body);
+    const before = hits;
+    assert.equal(await downloadEngine("v9.9.9"), path);
+    assert.equal(hits, before, "the second call uses the cache");
+    await assert.rejects(downloadEngine("v1.0.0"), /404/);
+  } finally {
+    server.close();
+    delete process.env.AOSCTL_RELEASES_URL;
+    delete process.env.AOSCTL_CACHE_DIR;
+  }
+});
