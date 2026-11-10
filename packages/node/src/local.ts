@@ -13,7 +13,7 @@ import { gunzipSync, inflateRawSync } from "node:zlib";
 import { Aos } from "./client.js";
 
 /** The engine release this SDK is tested with. */
-export const ENGINE_VERSION = "v0.4.1";
+export const ENGINE_VERSION = "v0.5.0";
 
 export interface LocalOptions {
   /** The application's Postgres. The engine keeps its own schemas there. */
@@ -74,7 +74,7 @@ export async function downloadEngine(version = ENGINE_VERSION): Promise<string> 
   const exe = os === "windows" ? "aos.exe" : "aos";
   const path = join(cacheDir(), "engine", version, exe);
   if (existsSync(path)) return path;
-  const base = (process.env.AOSCTL_RELEASES_URL ?? "https://github.com/flash-softeware/aos/releases/download").replace(/\/+$/, "") + "/" + version + "/";
+  const base = (process.env.AOSCTL_RELEASES_URL ?? "https://github.com/flash-software-technology/aos/releases/download").replace(/\/+$/, "") + "/" + version + "/";
   const asset = `aos_${version}_${os}_${arch}${os === "windows" ? ".zip" : ".tar.gz"}`;
   const get = async (url: string) => {
     const res = await fetch(url);

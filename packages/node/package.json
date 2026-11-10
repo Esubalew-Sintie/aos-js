@@ -28,12 +28,12 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/flash-softeware/aos-js.git",
+    "url": "git+https://github.com/flash-software-technology/aos-js.git",
     "directory": "packages/node"
   },
-  "homepage": "https://github.com/flash-softeware/aos-js#readme",
+  "homepage": "https://github.com/flash-software-technology/aos-js#readme",
   "bugs": {
-    "url": "https://github.com/flash-softeware/aos-js/issues"
+    "url": "https://github.com/flash-software-technology/aos-js/issues"
   },
   "publishConfig": {
     "access": "public"

@@ -54,4 +54,4 @@ const aos = local.aos;                          // the same client as with the h
 
 Next.js: `export const GET = (r) => local.fetch(r)` (and `POST`, ...) in `app/aos/[...path]/route.ts`.
 
-Source and issues: https://github.com/flash-softeware/aos-js
+Source and issues: https://github.com/flash-software-technology/aos-js

@@ -39,4 +39,4 @@ function Home() {
 
 The look comes from CSS variables (`--aos-accent`, `--aos-radius`, …) in `styles.css`, with a dark variant.
 
-Source and issues: https://github.com/flash-softeware/aos-js
+Source and issues: https://github.com/flash-software-technology/aos-js

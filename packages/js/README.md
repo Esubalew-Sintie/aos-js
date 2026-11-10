@@ -36,4 +36,4 @@ const aos = createClient({
 
 The client keeps an access and a refresh token, renews on a 401, and signs the person out when renewal fails.
 
-Source and issues: https://github.com/flash-softeware/aos-js
+Source and issues: https://github.com/flash-software-technology/aos-js
